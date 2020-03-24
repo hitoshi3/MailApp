@@ -207,16 +207,6 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
         
         return true;
     }
-    //textViewの編集が終わった時に呼ばれるイベント
-//    func textViewDidEndEditing(_ textField: UITextField) {
-//        if(self.mailContet.text.isEmpty) {
-//            //編集後mailContentが空の場合、placeholderを表示。
-//            self.mailContentPlaceholder.isHidden = false;
-//        }
-    
-        //こちらは呼ばれなかったがその理由は？
-//    }
-
     
     @IBAction func accessToCameraRoll(_ sender: Any) {
 
