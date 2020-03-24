@@ -11,7 +11,6 @@ import MessageUI
 
 class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate {
 
-    @IBOutlet weak var quoteFileLabel: UILabel!
     @IBOutlet weak var mailContentPlaceholder: UILabel!
     @IBOutlet weak var mailContet: UITextView!
     
@@ -29,7 +28,6 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
         
         //textViewに関するdelegateをこのクラスに記述する
         mailContet.delegate = self;
-        quoteFileLabel.text = "";
         
         //カメラロールを呼び出すためのクラス、delegateを追加
         self.imagePicker = UIImagePickerController();
@@ -49,6 +47,11 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
         self.subjectTextBox.resignFirstResponder();
         self.messageTextBox.resignFirstResponder();
         return true;
+    }
+    
+    //フォーカスが外れたらキーボードを閉じる
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true);
     }
     
     @IBAction func sendMail(_ sender: Any) {
