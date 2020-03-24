@@ -92,8 +92,6 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
         
         if(MFMailComposeViewController.canSendMail()) {
             
-            
-//            UINavigationBar.appearance().barTintColor = .mv_primary
             UINavigationBar.appearance().tintColor = .white
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
             if #available(iOS 13.0, *) {
@@ -123,8 +121,9 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
         //メッセージ本文を設定
         mailComponentVC.setMessageBody(message, isHTML: false);
         
-        if (attachedImage != nil) {
-            let img = attachedImage.jpegData(compressionQuality: 1.0);
+        let img = attachedImage.jpegData(compressionQuality: 1.0);
+        
+        if (img != nil) {
             //画像があれば追加する
             mailComponentVC.addAttachmentData(img!, mimeType: "image/png", fileName: "image")
             
@@ -156,7 +155,6 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
         }
         //モーダルを閉じる
         controller.dismiss(animated: true, completion: nil);
-        
     }
     
     //MailAddress確認
@@ -229,7 +227,6 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
     //[TODO] UIImageをリサイズする処理を完成させること
     func getResizedImage(ratio: CGFloat, image: UIImage) -> UIImage {
         
-//        let aspectScale = image.size.height / image.size.width;
         let scale: CGFloat = 2;
 
         let resizedSize = CGSize(width: CGFloat(image.size.width) / scale,
@@ -237,7 +234,10 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
 
         //リサイズ後のUIImageを生成する
         UIGraphicsBeginImageContext(resizedSize);
-        image.draw(in: CGRect(x: 0, y: 0, width: resizedSize.width, height: resizedSize.height));
+        image.draw(in: CGRect(x: 0,
+                              y: 0,
+                              width: resizedSize.width,
+                              height: resizedSize.height));
 
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
@@ -252,13 +252,8 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
             return;
         }
           
-        //取得した画像をimageViewに登録
-//        let rect = CGRect(x: 0, y: 0, width: self.imageView.bounds.width, height: self.imageView.bounds.height);
-        
         //画像の縦横サイズを保ったままimageViewにえ全体が収まるように画像を入れる
         self.imageView.contentMode = .scaleAspectFit;
-        
-//        self.imageView.frame = rect;
         
         //imageViewに貼り付ける
         self.imageView.image = image;
@@ -266,24 +261,8 @@ class ViewController: UIViewController, UITextViewDelegate, UIImagePickerControl
         //attachedImageにコピー
         self.attachedImage = image;
         
-        //
-//        let fullString = NSMutableAttributedString(string: self.messageTextBox.text);
-//
-//        let imageAttachment = NSTextAttachment();
-//
-//        //カメラロールで取得し縮小したimageを代入
-//        imageAttachment.image = image;
-//
-//        let imageString = NSAttributedString(attachment: imageAttachment);
-//        fullString.append(imageString);
-//
-//
-//        //textViewに画像を含んだテキストをセット
-//        self.messageTextBox.attributedText = fullString;
-        
         //カメラロールを閉じる--->書かないと自動で閉じてくれない
         self.imagePicker.dismiss(animated: true, completion: nil);
-     
     }
     
     //Alertを表示する
